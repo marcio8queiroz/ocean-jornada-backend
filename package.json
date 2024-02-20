@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/marcio8queiroz/ocean-jornada-backend/issues"
   },
-  "homepage": "https://github.com/marcio8queiroz/ocean-jornada-backend#readme"
+  "homepage": "https://github.com/marcio8queiroz/ocean-jornada-backend#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
