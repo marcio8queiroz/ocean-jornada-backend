@@ -1,0 +1,20 @@
+{
+  "name": "ocean-jornada-backend",
+  "version": "1.0.0",
+  "description": "Projeto com NodeJS e Express feito para a Jornada Backend",
+  "master": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcio8queiroz/ocean-jornada-backend.git"
+  },
+  "keywords": [],
+  "author": "Paulo Salvatore",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/marcio8queiroz/ocean-jornada-backend/issues"
+  },
+  "homepage": "https://github.com/marcio8queiroz/ocean-jornada-backend#readme"
+}
