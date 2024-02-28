@@ -1,12 +1,12 @@
 const express = require('express')
-const { MongoCliente } = require('mongodb')
+const { MongoClient } = require('mongodb')
 
 const dburl = 'mongodb+srv://marcio8queiroz:admin@cluster0.0rysf66.mongodb.net'
 const dbName = 'OceanJornadaBackend'
 
 async function main() {
 
-const client = new MongoCliente(dburl)
+const client = new MongoClient(dburl)
 
 console.log('Conectando ao banco de dados...')
  await client.connect()
