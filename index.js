@@ -1,7 +1,8 @@
+require('dotenv').config()
 const express = require('express')
-const { MongoClient } = require('mongodb')
+const { MongoClient, ObjectId } = require('mongodb')
 
-const dburl = 'mongodb+srv://marcio8queiroz:admin@cluster0.0rysf66.mongodb.net'
+const dburl = process.env.DATABASE_URL
 const dbName = 'OceanJornadaBackend'
 
 async function main() {
@@ -41,31 +42,59 @@ app.get('/item', async function (req, res) {
 })
 
 //Read By ID -> [GET] /item/:
-app.get('/item/:id', function (req, res) {
+app.get('/item/:id', async function (req, res) {
   //Acesso o id no parâmetro de rota 
   const id = req.params.id
 
   // Acesso item na lista baseado no ID recebido
-  const item = lista[id]
-
+   // Acesso item na lista baseado no ID recebido
+   const itens =  await Collection.findOne ({
+    _id: new ObjectId(id)
+   } )
   // Envio o item obtido como resposta HTTP
   res.send(item)
 })
 
+
 app.use(express.json())
 
 //Create - > [POST]/item
-app.post('/item', function (req, res) {
+app.post('/item', async function (req, res) {
   //Extraímos o corpo da requisição
-  const body = req.body
-// pegamos o nome que foi enviado dentro do corpo
   const item = body.nome
 
-  //Colocamos o nome dentro da lista de itens
-  lista.push(item)
+ //Colocamos o nome dentro da lista de itens
+ await collection.insertOne(item)
 
- res.send('Item adicionado com sucesso')
- 
+ res.send(item)
+
+})
+//update -> []PUT /item/:id
+app.put('/item/:id', async function(req, res) {
+  //pegamos o ID recebido pela rota
+  const id = String(re.params.id)
+
+  // pegamos o novo item do corpo da requisição
+  const novoItem = req.body
+  //Atualizamos o docmento na collection
+  await collection.updateOne(
+    {_id: new ObjectId(id) },
+    {$set: novoItem}
+  )
+
+  // Enviamos uma mensagem de sucesso
+  res.send('Item atualizado com sucesso!')
+})
+
+//Dlete -> [DELETE] /item/:id
+app.delete('/item/:id', async function (req, res){
+  //Pegamos o ID da rota
+  const id = req.params.id
+
+  // Realizamos a opeação de deleteOne
+  await collection.deleteOne({ _id: new ObjectId(id)})
+
+  res.send('Item removido com sucesso!')
 })
  
 app.listen(3000)
