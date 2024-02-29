@@ -31,14 +31,15 @@ app.get('/', function (req, res) {
 //Lista de pesonagens
 const lista = ['Rick Sanchez', 'Morty Smith', 'Sumer Smith']
 const db = client.db(dbName)
-const collection = db.collection('itens')
+const collection = db.collection('items')
 
 // Read All -> [GET] / item
 app.get('/item', async function (req, res) {
-  const itens = collection.find().toArray()
+  // Realizamos a operação de find na collection do MongoDB
+  const items = collection.find().toArray()
 
-  // Envio a lista inteira como resposta HTTP
-  res.send(lista)
+  // Envio todos os documentos como resposta HTTP
+  res.send(items)
 })
 
 //Read By ID -> [GET] /item/:
@@ -46,9 +47,9 @@ app.get('/item/:id', async function (req, res) {
   //Acesso o id no parâmetro de rota 
   const id = req.params.id
 
-  // Acesso item na lista baseado no ID recebido
-   // Acesso item na lista baseado no ID recebido
-   const itens =  await Collection.findOne ({
+ 
+   // Acesso o item na collection baseado no ID recebido
+   const items =  await Collection.findOne ({
     _id: new ObjectId(id)
    } )
   // Envio o item obtido como resposta HTTP
@@ -63,20 +64,21 @@ app.post('/item', async function (req, res) {
   //Extraímos o corpo da requisição
   const item = body.nome
 
- //Colocamos o nome dentro da lista de itens
+ // Colocamos o item dentro da collection de itens
  await collection.insertOne(item)
-
+ // Enviamos uma resposta de sucesso
  res.send(item)
 
 })
 //update -> []PUT /item/:id
 app.put('/item/:id', async function(req, res) {
   //pegamos o ID recebido pela rota
-  const id = String(re.params.id)
+  const id = String(req.params.id)
 
   // pegamos o novo item do corpo da requisição
   const novoItem = req.body
-  //Atualizamos o docmento na collection
+  
+  //Atualizamos o documento na collection
   await collection.updateOne(
     {_id: new ObjectId(id) },
     {$set: novoItem}
